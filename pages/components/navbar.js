@@ -15,7 +15,7 @@ const NavbarComponent = () => {
             <Nav className="me-auto">
               <Nav.Link href="/">Home</Nav.Link>
               <Nav.Link href="/watchlist">Watchlist</Nav.Link>
-              <Nav.Link href="/auto-trade">Auto-trade</Nav.Link>
+              <Nav.Link href="/autotrade">Auto-trade</Nav.Link>
               <NavDropdown title="Account" id="basic-nav-dropdown" >
                 <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
                 <NavDropdown.Item href="/login">
