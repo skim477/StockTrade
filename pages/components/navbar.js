@@ -9,16 +9,16 @@ const NavbarComponent = () => {
     return (
         <Navbar expand="lg" className="navbar navbar-expand-lg bg-primary" data-bs-theme="dark" >
         <Container className="container-fluid">
-          <Navbar.Brand href="#home">StockTrade</Navbar.Brand>
+          <Navbar.Brand href="/">StockTrade</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="#home">Home</Nav.Link>
-              <Nav.Link href="#watchlist">Watchlist</Nav.Link>
-              <Nav.Link href="#auto-trade">Auto-trade</Nav.Link>
+              <Nav.Link href="/">Home</Nav.Link>
+              <Nav.Link href="/watchlist">Watchlist</Nav.Link>
+              <Nav.Link href="/auto-trade">Auto-trade</Nav.Link>
               <NavDropdown title="Account" id="basic-nav-dropdown" >
-                <NavDropdown.Item href="#action/3.1">Profile</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
+                <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+                <NavDropdown.Item href="/login">
                   Logout
                 </NavDropdown.Item>
               </NavDropdown>
