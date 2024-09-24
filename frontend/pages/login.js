@@ -1,10 +1,34 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { Container, Button, Card, Form } from 'react-bootstrap';
+import { Container, Button, Card, Form, Alert } from 'react-bootstrap';
 
 const Login = () => {
 
     const router = useRouter();
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await fetch('http://localhost:8080/api/login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email, password })
+            });
+            const data = await res.json();
+            if (res.status === 200) {
+              alert('Login successful');
+              console.log('Login successful', data);
+              router.push('/');
+            } else {
+              alert(data.message);
+            }
+          } catch (error) {
+            console.error('Error:', error);
+          }
+    };
 
     const handleCreateAccountClick = () => {
         router.push('/signup');
@@ -18,18 +42,18 @@ const Login = () => {
                     <Card.Title style={{ color: 'white' }}>Account</Card.Title>
                 </Card.Header>
                 <Card.Body>
-                    <Form>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group className="mb-3">
                             <Form.Label>Email</Form.Label>
-                            <Form.Control type="email" placeholder="xxx@example.com" />
+                            <Form.Control type="email" placeholder="xxx@example.com" value={email} name="email" id="email" onChange={e=> setEmail(e.target.value)}/>
                             <Form.Text className="text-muted">
                                 We'll never share your personal information.
                             </Form.Text>
                         </Form.Group>
 
-                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                        <Form.Group className="mb-3">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder="Password" />
+                            <Form.Control type="password" placeholder="Password" value={password} name="password" id="password" onChange={e=> setPassword(e.target.value)}/>
                         </Form.Group>
 
                         <div className="d-flex justify-content-center">
