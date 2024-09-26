@@ -140,31 +140,25 @@ app.get("/api/news", passport.authenticate('jwt', { session: false}), async (req
 });
 
 
-app.get("/api/stock-data", passport.authenticate('jwt', { session: false}), async (req,res) => {
-    const date = new Date();
-    let day = String(date.getDate()).padStart(2, '0');
-    let month = String(date.getMonth()+1).padStart(2, '0');
-    let year = date.getFullYear();
+app.get("/api/stock/:symbol", passport.authenticate('jwt', { session: false}), async (req,res) => {
+    const { symbol } = req.params;
+    const fromDate = req.query.from;
+    const toDate = req.query.to;
 
-    let from_date = new Date();
-    from_date.setMonth(from_date.getMonth() - 6);
-    let fromDay = String(from_date.getDate()).padStart(2, '0');
-    let fromMonth = String(from_date.getMonth() + 1).padStart(2, '0');
-    let fromYear = from_date.getFullYear();
-    const TICKER = 'AAPL';
     const MULTIPLIER = '1';
     const TIMESPAN = 'day';
-    //const FROM = '2024-01-05';
-    const FROM = `${fromYear}-${fromMonth}-${fromDay}`;
-    //const TO = '2024-09-13';
-    const TO = `${year}-${month}-${day}`;
 
     const POLYGON_API_KEY = process.env.POLYGON_API_KEY;
-    const POLYGON_URL = `https://api.polygon.io/v2/aggs/ticker/${TICKER}/range/${MULTIPLIER}/${TIMESPAN}/${FROM}/${TO}?apiKey=${POLYGON_API_KEY}`;
+    const POLYGON_URL = `https://api.polygon.io/v2/aggs/ticker/${symbol}/range/${MULTIPLIER}/${TIMESPAN}/${fromDate}/${toDate}?apiKey=${POLYGON_API_KEY}`;
+
     try {
         const response = await axios.get(POLYGON_URL);
+        if (!response.data || !response.data.results) {
+            return res.status(404).json({ message: "No data found for the given symbol and date range." });
+        }
         res.status(200).json(response.data);
     } catch (error) {
+         console.error('Error fetching data from Polygon.io:', error.message);
         res.status(500).json({ message: "Failed to fetch data", error: error.message });
     }
 });
