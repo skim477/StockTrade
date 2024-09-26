@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Container, Button, Tabs, Tab, ListGroup, Card, Row, Col, Pagination } from 'react-bootstrap';
+import { Container, Card, Row, Col, Pagination } from 'react-bootstrap';
 import styles from '@/styles/News.module.css';
-
-const POLYGON_API_KEY = 'H8pwcjAJyG8SbWTtN_HFmaVvNznEsHgc';
-const POLYGON_URL = `https://api.polygon.io/v2/reference/news?limit=12&apiKey=${POLYGON_API_KEY}`;
+import { getToken } from '@/lib/authenticate';
 
 const News = () => {
     const [newsData, setNewsData] = useState([]);
@@ -20,7 +18,14 @@ const News = () => {
         const fetchNewsData = async () => {
             setLoading(true);
             try{
-                const response = await axios.get(POLYGON_URL);        
+                //const response = await axios.get(POLYGON_URL);        
+                
+                const token = getToken(); // Get JWT token
+                const response = await axios.get('http://localhost:8080/api/news', {
+                    headers: {
+                        Authorization: `JWT ${token}`
+                    }
+                });
                 setNewsData(response.data.results);
             } catch(error) {
                 setError(error.message);

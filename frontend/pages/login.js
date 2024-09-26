@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { setToken } from '@/lib/authenticate';
 import { useRouter } from 'next/router';
-import { Container, Button, Card, Form, Alert } from 'react-bootstrap';
+import { Container, Button, Card, Form } from 'react-bootstrap';
 
 const Login = () => {
 
@@ -11,23 +12,27 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         try {
             const res = await fetch('http://localhost:8080/api/login', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ email, password })
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password }),
             });
+
             const data = await res.json();
+
             if (res.status === 200) {
-              alert('Login successful');
-              console.log('Login successful', data);
-              router.push('/');
+                // Store token in local storage
+                setToken(data.token);
+                alert('Login successful');
+                router.push('/main');
             } else {
-              alert(data.message);
+                setWarning(data.message);
             }
-          } catch (error) {
+        } catch (error) {
             console.error('Error:', error);
-          }
+        }
     };
 
     const handleCreateAccountClick = () => {

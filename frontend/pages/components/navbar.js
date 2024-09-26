@@ -4,6 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Logout from './logout';
 const NavbarComponent = () => {
 
     return (
@@ -18,8 +19,8 @@ const NavbarComponent = () => {
               <Nav.Link href="/autotrade">Auto-trade</Nav.Link>
               <NavDropdown title="Account" id="basic-nav-dropdown" >
                 <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
-                <NavDropdown.Item href="/login">
-                  Logout
+                <NavDropdown.Item >
+                  <Logout />
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>

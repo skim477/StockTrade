@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Container, Button, Tabs, Tab, ListGroup, Pagination } from 'react-bootstrap';
-
-const ALPHA_API_KEY = 'C9ZGL37Z6SK002P1';
-const ALPHA_URL = `https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey==${ALPHA_API_KEY}`;
-
+import { getToken } from '@/lib/authenticate';
 
 const TopGainersLosers = () => {
 
@@ -26,7 +23,14 @@ const TopGainersLosers = () => {
             setLoading(true);
 
             try {
-                const response = await axios.get(ALPHA_URL);
+                // const response = await axios.get(ALPHA_URL);
+
+                const token = getToken(); // Get JWT token
+                const response = await axios.get('http://localhost:8080/api/top-gainers-losers', {
+                    headers: {
+                        Authorization: `JWT ${token}`
+                    }
+                });
                 setData({
                     top_gainers: response.data.top_gainers || [],
                     top_losers: response.data.top_losers || [],

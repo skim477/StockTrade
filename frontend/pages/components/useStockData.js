@@ -1,26 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-
-const date = new Date();
-let day = String(date.getDate()).padStart(2, '0');
-let month = String(date.getMonth()+1).padStart(2, '0');
-let year = date.getFullYear();
-
-let from_date = new Date();
-from_date.setMonth(from_date.getMonth() - 6);
-let fromDay = String(from_date.getDate()).padStart(2, '0');
-let fromMonth = String(from_date.getMonth() + 1).padStart(2, '0');
-let fromYear = from_date.getFullYear();
-
-const POLYGON_API_KEY = 'H8pwcjAJyG8SbWTtN_HFmaVvNznEsHgc'; // Replace with your Polygon.io API key
-const TICKER = 'AAPL';
-const MULTIPLIER = '1';
-const TIMESPAN = 'day';
-//const FROM = '2024-01-05';
-const FROM = `${fromYear}-${fromMonth}-${fromDay}`;
-//const TO = '2024-09-13';
-const TO = `${year}-${month}-${day}`;
-const POLYGON_URL = `https://api.polygon.io/v2/aggs/ticker/${TICKER}/range/${MULTIPLIER}/${TIMESPAN}/${FROM}/${TO}?apiKey=${POLYGON_API_KEY}`;
+import { getToken } from '@/lib/authenticate';
 
 const useStockData = () => {
   const [stockData, setStockData] = useState([]);
@@ -28,8 +8,14 @@ const useStockData = () => {
   const [error, setError] = useState(null);
 
   const fetchStockData = async () => {
+
     try {
-      const response = await axios.get(POLYGON_URL);
+      const token = getToken(); // Get JWT token
+      const response = await axios.get('http://localhost:8080/api/stock-data', {
+        headers: {
+          Authorization: `JWT ${token}`
+        }
+      });
       const result = response.data.results || [];
       const formattedStockData = result.map(item => ({
         date: new Date(item.t).toLocaleDateString(),
