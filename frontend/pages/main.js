@@ -1,14 +1,24 @@
+import React, { useState, useEffect } from 'react';
 import TopGainersLosers from "./components/topGainersLosers";
 import News from "./components/news";
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import React, { useState } from 'react';
 import StockChart from "./components/chart";
 import UseStockData from './components/useStockData';
+import { getToken } from '@/lib/authenticate';
+import { useRouter } from 'next/router';
 
-const Home = () => {
+const Main = () => {
 
   const [showGainersLosers, setShowGainersLosers] = useState(false);
   const { stockData, loading, error } = UseStockData();
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = getToken();
+    if (!token) {
+      router.push('/login');
+    }
+  }, [router]);
 
   const handleButtonClick = () => {
     setShowGainersLosers(!showGainersLosers);
@@ -40,4 +50,4 @@ const Home = () => {
 
 
 
-export default Home;
+export default Main;
