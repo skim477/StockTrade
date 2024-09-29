@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
 const Main = () => {
 
   const [showGainersLosers, setShowGainersLosers] = useState(false);
-  const { stockData, loading, error } = UseStockData();
+  const { stockData, loading, error } = UseStockData('AAPL');
   const router = useRouter();
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const Main = () => {
     return (
         <Container fluid="md">
           <Row className='mb-3'>
-            <Col xs={12} lg={8}><StockChart data={stockData} /></Col>
+            <Col xs={12} lg={8}><StockChart data={stockData} ticker='AAPL' /></Col>
             <Col xs={12} lg={4}>
               <Button onClick={handleButtonClick} className="mb-3 mt-3 w-100">
                 {showGainersLosers ? "Hide Top Gainers/Top Losers/Most Active" :  "Show Top Gainers / Top Losers / Most Active"}

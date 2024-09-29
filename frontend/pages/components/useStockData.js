@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { getToken } from '@/lib/authenticate';
 
-const useStockData = () => {
+const useStockData = (ticker) => {
   const [stockData, setStockData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchStockData = async (ticker = 'AAPL') => {
+  const fetchStockData = async () => {
     const date = new Date();
     let day = String(date.getDate()).padStart(2, '0');
     let month = String(date.getMonth()+1).padStart(2, '0');
@@ -19,6 +19,9 @@ const useStockData = () => {
     let fromMonth = String(from_date.getMonth() + 1).padStart(2, '0');
     let fromYear = from_date.getFullYear();
 
+    let multiplier = '1';
+    let timespan = 'day';
+
     //const FROM = '2024-01-05';
     const FROM = `${fromYear}-${fromMonth}-${fromDay}`;
     //const TO = '2024-09-13';
@@ -26,7 +29,7 @@ const useStockData = () => {
 
     try {
       const token = getToken(); // Get JWT token
-      const response = await axios.get(`http://localhost:8080/api/stock/${ticker}?from=${FROM}&to=${TO}`, {
+      const response = await axios.get(`http://localhost:8080/api/stock/${ticker}?multiplier=${multiplier}&timespan=${timespan}&from=${FROM}&to=${TO}`, {
         headers: {
           Authorization: `JWT ${token}`
         }
@@ -60,7 +63,7 @@ const useStockData = () => {
     };
 
     getData();
-  }, []);
+  }, [ticker]); //re-run when the ticker changes
 
   return { stockData, loading, error };
 };

@@ -5,7 +5,7 @@ import { Container } from 'react-bootstrap';
 // Register all necessary components
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-const StockChart = ({ data }) => {
+const StockChart = ({ data, ticker }) => {
     const chartData = {
         labels: data.map(d => d.date),
         datasets: [
@@ -34,7 +34,7 @@ const StockChart = ({ data }) => {
             },
             title: {
                 display: true,
-                text: 'APPLE', // Title above the chart
+                text: `${ticker}`, // Title above the chart
             },
             tooltip: {
                 enabled: true, // Enable tooltips to display data on hover

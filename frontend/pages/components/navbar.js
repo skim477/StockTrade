@@ -10,11 +10,11 @@ const NavbarComponent = () => {
     return (
         <Navbar expand="lg" className="navbar navbar-expand-lg bg-primary" data-bs-theme="dark" >
         <Container className="container-fluid">
-          <Navbar.Brand href="/">StockTrade</Navbar.Brand>
+          <Navbar.Brand href="/main">StockTrade</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="/">Home</Nav.Link>
+              <Nav.Link href="/main">Home</Nav.Link>
               <Nav.Link href="/watchlist">Watchlist</Nav.Link>
               <Nav.Link href="/autotrade">Auto-trade</Nav.Link>
               <NavDropdown title="Account" id="basic-nav-dropdown" >

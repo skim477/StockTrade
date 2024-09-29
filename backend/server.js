@@ -142,14 +142,10 @@ app.get("/api/news", passport.authenticate('jwt', { session: false}), async (req
 
 app.get("/api/stock/:symbol", passport.authenticate('jwt', { session: false}), async (req,res) => {
     const { symbol } = req.params;
-    const fromDate = req.query.from;
-    const toDate = req.query.to;
-
-    const MULTIPLIER = '1';
-    const TIMESPAN = 'day';
+    const { from: fromDate, to: toDate, multiplier, timespan } = req.query;
 
     const POLYGON_API_KEY = process.env.POLYGON_API_KEY;
-    const POLYGON_URL = `https://api.polygon.io/v2/aggs/ticker/${symbol}/range/${MULTIPLIER}/${TIMESPAN}/${fromDate}/${toDate}?apiKey=${POLYGON_API_KEY}`;
+    const POLYGON_URL = `https://api.polygon.io/v2/aggs/ticker/${symbol}/range/${multiplier}/${timespan}/${fromDate}/${toDate}?apiKey=${POLYGON_API_KEY}`;
 
     try {
         const response = await axios.get(POLYGON_URL);
