@@ -59,7 +59,7 @@ const StockChart = ({ data, ticker }) => {
 
     return (
         <Container>
-            <h2 className="mt-3">Stock Price Chart</h2>
+            <h3>Stock Price Chart</h3>
             <Line data={chartData} options={options} />
         </Container>
     );

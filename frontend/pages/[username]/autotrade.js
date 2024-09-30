@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import TradingviewChart from './components/tradingviewChart';
+import TradingviewChart from '../components/tradingviewChart';
 
 const AutoTrade = () => {
 

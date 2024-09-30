@@ -4,21 +4,40 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { readToken } from '@/lib/authenticate';
 import Logout from './logout';
+
 const NavbarComponent = () => {
+  const router = useRouter();
+  const [username, setUsername] = useState(null);
+
+  useEffect(() => {
+    const token = readToken();
+    if (token && token.email) {
+      const userEmail = token.email.split('@')[0];
+      setUsername(userEmail);
+    }
+  },[]);
+
+  const handleNavigation = (path) => {
+    if (username) {
+      router.push(`/${username}/${path}`);
+    }
+  };
 
     return (
         <Navbar expand="lg" className="navbar navbar-expand-lg bg-primary" data-bs-theme="dark" >
         <Container className="container-fluid">
-          <Navbar.Brand href="/main">StockTrade</Navbar.Brand>
+          <Navbar.Brand>StockTrade</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="/main">Home</Nav.Link>
-              <Nav.Link href="/watchlist">Watchlist</Nav.Link>
-              <Nav.Link href="/autotrade">Auto-trade</Nav.Link>
-              <NavDropdown title="Account" id="basic-nav-dropdown" >
-                <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+              <Nav.Link onClick={() => handleNavigation('main')}>Home</Nav.Link>
+              <Nav.Link onClick={() => handleNavigation('watchlist')}>Watchlist</Nav.Link>
+              <Nav.Link onClick={() => handleNavigation('autotrade')}>Auto-trade</Nav.Link>
+              <NavDropdown title={username} id="basic-nav-dropdown" >
                 <NavDropdown.Item >
                   <Logout />
                 </NavDropdown.Item>
