@@ -1,15 +1,16 @@
-
+import Layout from '@/pages/components/layout';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootswatch/dist/minty/bootstrap.min.css";
-import NavbarComponent from "./components/navbar";
+//import NavbarComponent from "./components/navbar";
 
 export default function App({ Component, pageProps }) {
 
   return (
 
   <>
-    <NavbarComponent />
+    <Layout>
     <Component {...pageProps} />
+    </Layout>
   </>
 
   );

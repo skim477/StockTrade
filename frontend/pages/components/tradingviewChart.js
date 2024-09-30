@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-const TradingViewChart = ({ symbol = 'NDX' }) => {
+const TradingViewChart = ({symbol}) => {
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const TradingViewChart = ({ symbol = 'NDX' }) => {
           save_image: false,
           details: true,
           width: "100%",
-          height: "800px",
+          height: "500px",
         });
       };
 

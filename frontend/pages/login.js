@@ -25,8 +25,10 @@ const Login = () => {
             if (res.status === 200) {
                 // Store token in local storage
                 setToken(data.token);
-                alert('Login successful');
-                router.push('/main');
+                console.log("login successful");
+                
+                const username = email.split('@')[0];
+                router.push(`/${username}/main`);
             } else {
                 setWarning(data.message);
             }
