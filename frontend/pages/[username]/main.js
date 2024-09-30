@@ -2,15 +2,16 @@ import React, { useState, useEffect } from 'react';
 import TopGainersLosers from "../components/topGainersLosers";
 import News from "../components/news";
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import StockChart from "../components/chart";
-import UseStockData from '../components/useStockData';
+//import StockChart from "../components/chart";
+//import UseStockData from '../components/useStockData';
+import TradingviewChart from '../components/tradingviewChart';
 import { getToken, readToken } from '@/lib/authenticate';
 import { useRouter } from 'next/router';
 
 const Main = () => {
 
   const [showGainersLosers, setShowGainersLosers] = useState(false);
-  const { stockData, loading, error } = UseStockData('AAPL');
+  //const { stockData, loading, error } = UseStockData('AAPL');
   const router = useRouter();
   const { username } = router.query;
 
@@ -34,8 +35,8 @@ const Main = () => {
     setShowGainersLosers(!showGainersLosers);
   }
 
-  if (loading) return <p>Loading stock data...</p>;
-  if (error) return <p>Error: {error}</p>;
+ // if (loading) return <p>Loading stock data...</p>;
+  //if (error) return <p>Error: {error}</p>;
 
     return (
         <Container fluid="md">
@@ -43,7 +44,10 @@ const Main = () => {
             <h2>Welcome, {username}</h2>
           </Row>
           <Row className='mb-3'>
-            <Col xs={12} lg={8}><StockChart data={stockData} ticker='AAPL' /></Col>
+            {/* <Col xs={12} lg={8}><StockChart data={stockData} ticker='AAPL' /></Col> */}
+            <Col xs={12} lg={8}>
+              <TradingviewChart symbol='NASDAQ'/>
+            </Col>
             <Col xs={12} lg={4}>
               <Button onClick={handleButtonClick} className="mb-3 mt-3 w-100">
                 {showGainersLosers ? "Hide Top Gainers/Top Losers/Most Active" :  "Show Top Gainers / Top Losers / Most Active"}
