@@ -128,13 +128,30 @@ app.get("/api/top-gainers-losers", passport.authenticate('jwt', { session: false
 });
 
 app.get("/api/news", passport.authenticate('jwt', { session: false}), async (req,res) => {
-    console.log('new api called');
     const POLYGON_API_KEY = process.env.POLYGON_API_KEY;
     const POLYGON_URL = `https://api.polygon.io/v2/reference/news?limit=12&apiKey=${POLYGON_API_KEY}`;
     try {
         const response = await axios.get(POLYGON_URL);
         res.status(200).json(response.data);
     } catch (error) {
+        res.status(500).json({ message: "Failed to fetch data", error: error.message });
+    }
+});
+
+app.get("/api/news/:symbol", passport.authenticate('jwt', { session: false}), async (req,res) => {
+    const { symbol } = req.params;
+    
+    const POLYGON_API_KEY = process.env.POLYGON_API_KEY;
+    const POLYGON_URL = `https://api.polygon.io/v2/reference/news?ticker=${symbol}&limit=10&apiKey=${POLYGON_API_KEY}`;
+   
+    try {
+        const response = await axios.get(POLYGON_URL);
+        if (!response.data || !response.data.results) {
+            return res.status(404).json({ message: "No data found for the given symbol." });
+        }
+        res.status(200).json(response.data);
+    } catch (error) {
+         console.error('Error fetching data from Polygon.io:', error.message);
         res.status(500).json({ message: "Failed to fetch data", error: error.message });
     }
 });
@@ -151,6 +168,24 @@ app.get("/api/stock/:symbol", passport.authenticate('jwt', { session: false}), a
         const response = await axios.get(POLYGON_URL);
         if (!response.data || !response.data.results) {
             return res.status(404).json({ message: "No data found for the given symbol and date range." });
+        }
+        res.status(200).json(response.data);
+    } catch (error) {
+         console.error('Error fetching data from Polygon.io:', error.message);
+        res.status(500).json({ message: "Failed to fetch data", error: error.message });
+    }
+});
+
+app.get("/api/dividends/:symbol", passport.authenticate('jwt', { session: false}), async (req,res) => {
+    const { symbol } = req.params;
+    
+    const POLYGON_API_KEY = process.env.POLYGON_API_KEY;
+    const POLYGON_URL = `https://api.polygon.io/v3/reference/dividends?ticker=${symbol}&limit=20&apiKey=${POLYGON_API_KEY}`;
+   
+    try {
+        const response = await axios.get(POLYGON_URL);
+        if (!response.data || !response.data.results) {
+            return res.status(404).json({ message: "No data found for the given symbol." });
         }
         res.status(200).json(response.data);
     } catch (error) {

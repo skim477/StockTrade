@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { getToken } from '@/lib/authenticate';
 
-const useStockData = (ticker) => {
+const useStockData = ({ticker}) => {
   const [stockData, setStockData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

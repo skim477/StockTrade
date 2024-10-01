@@ -12,6 +12,7 @@ import Logout from './logout';
 const NavbarComponent = () => {
   const router = useRouter();
   const [username, setUsername] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const token = readToken();
@@ -24,6 +25,17 @@ const NavbarComponent = () => {
   const handleNavigation = (path) => {
     if (username) {
       router.push(`/${username}/${path}`);
+    }
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchQuery) {
+      router.push(`/${username}/${searchQuery}`);
     }
   };
 
@@ -44,8 +56,14 @@ const NavbarComponent = () => {
               </NavDropdown>
             </Nav>
             <Nav className="ms-auto">
-              <Form className="d-flex">
-                <Form.Control className="form-control me-sm-2" type="search" placeholder="Search" />
+              <Form className="d-flex" onSubmit={handleSearchSubmit}>
+                <Form.Control 
+                  className="form-control me-sm-2" 
+                  type="search" 
+                  placeholder="Search by Symbol" 
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                />
                 <Button className="btn btn-secondary my-2 my-sm-0" type="submit">Search</Button>
               </Form>
             </Nav>

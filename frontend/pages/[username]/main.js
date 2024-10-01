@@ -12,31 +12,48 @@ const Main = () => {
 
   const [showGainersLosers, setShowGainersLosers] = useState(false);
   //const { stockData, loading, error } = UseStockData('AAPL');
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
   const { username } = router.query;
 
   useEffect(() => {
-    const token = getToken();
-    if (!token) {
-      router.push('/login');
-    } else {
-      // Decode the token to get the email or username
-      const userData = readToken(); // readToken decodes the JWT
-      const loggedInUsername = userData.email.split('@')[0]; // Extract username from email
-
-      // Check if the username in the URL matches the logged-in username
-      if (loggedInUsername !== username) {
-          router.push('/login'); // Redirect to login if not matching
+    const verifyToken = () => {
+      if (!username) {
+        // Wait for `username` to be available in `router.query`
+        return;
       }
-    }
-  }, [router]);
+
+      const token = getToken();
+      if (!token) {
+        router.push('/login');
+      } 
+
+      try {
+        // Decode the token to get the email or username
+        const userData = readToken(); // readToken decodes the JWT
+        const loggedInUsername = userData.email.split('@')[0]; // Extract username from email
+
+        // Check if the username in the URL matches the logged-in username
+        if (loggedInUsername !== username) {
+          router.push('/login'); // Redirect to login if not matching
+        } else {
+          setLoading(false); // Set loading to false only if token is verified
+        }
+      } catch (error) {
+        console.error(error);
+        router.push('/login');
+      }
+    };
+
+    verifyToken();
+  }, [router, username]);
 
   const handleButtonClick = () => {
     setShowGainersLosers(!showGainersLosers);
   }
 
- // if (loading) return <p>Loading stock data...</p>;
   //if (error) return <p>Error: {error}</p>;
+  if (loading) return <p>Loading...</p>;
 
     return (
         <Container fluid="md">
