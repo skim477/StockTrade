@@ -194,6 +194,85 @@ app.get("/api/dividends/:symbol", passport.authenticate('jwt', { session: false}
     }
 });
 
+app.get("/api/favourites", passport.authenticate('jwt', { session: false }), async (req, res) => {
+    const userId = req.user._id;
+    
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
+        res.status(200).json({ favourites: user.favourites });
+    } catch (error) {
+        console.error('Error fetching favourites:', error.message);
+        res.status(500).json({ message: "Failed to fetch favourites.", error: error.message });
+    }
+});
+
+
+app.post("/api/favourites", passport.authenticate('jwt', { session: false}), async (req,res) => {
+    const { symbol } = req.body;
+    const userId = req.user._id;
+
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        if (!user.favourites.includes(symbol)) {
+            user.favourites.push(symbol);
+            await user.save();
+        }
+
+        res.status(200).json({ message: `${symbol} added to favourite` });
+
+    } catch (error) {
+        console.error('Error adding to favourites: ', error.message);
+        res.status(500).json({ message: 'Failed to add to favourites. ', error: error.message });
+    
+    }
+});
+
+app.delete("/api/favourites/:symbol", passport.authenticate('jwt', { session: false}), async (req,res) => {
+    const { symbol } = req.params;
+    const userId = req.user._id;
+
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        user.favourites = user.favourites.filter(fav => fav !== symbol);
+        await user.save();
+
+        res.status(200).json({ message: `${symbol} removed from favourites.` });
+
+    } catch {
+        console.error('Error removing to favourites: ', error.message);
+        res.status(500).json({ message: 'Failed to remove to favourites. ', error: error.message });
+    }
+
+});
+
+app.get("/api/favourites/:symbol", passport.authenticate('jwt', { session: false }), async (req, res) => {
+    const { symbol } = req.params;
+    const userId = req.user._id;
+
+    try {
+        const user = await User.findById(userId);
+        const isFavourite = user.favourites.includes(symbol);
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
+        res.status(200).json({ isFavourite });
+    } catch (error) {
+        console.error('Error fetching favourites:', error.message);
+        res.status(500).json({ message: "Failed to fetch favourites.", error: error.message });
+    }
+});
+
 app.use((req,res) => {
     res.status(404).end();
 });
