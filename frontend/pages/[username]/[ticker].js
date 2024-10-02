@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { Container, Row, Alert, Button } from 'react-bootstrap';
 import TradingViewChart from '../components/tradingviewChart';
 import Dividends from '../components/dividends';
-import TickerNews from '../components/tickerNews';
+import News from '../components/news';
 import { getToken } from '@/lib/authenticate';
 import axios from 'axios';
 import { useAtom } from 'jotai';
@@ -87,7 +87,7 @@ const Ticker = () => {
                 <Dividends ticker={symbol} />
             </Row>
             <Row>
-                <TickerNews ticker={symbol} />
+                <News ticker={symbol} />
             </Row>
         </Container>
     );

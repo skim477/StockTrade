@@ -4,7 +4,7 @@ import { Container, Card, Row, Col, Pagination } from 'react-bootstrap';
 import styles from '@/styles/News.module.css';
 import { getToken } from '@/lib/authenticate';
 
-const News = () => {
+const News = ({ticker}) => {
     const [newsData, setNewsData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -18,10 +18,12 @@ const News = () => {
         const fetchNewsData = async () => {
             setLoading(true);
             try{
-                //const response = await axios.get(POLYGON_URL);        
-                
+
                 const token = getToken(); // Get JWT token
-                const response = await axios.get('http://localhost:8080/api/news', {
+                const url = ticker 
+                ? `http://localhost:8080/api/news?=${ticker}` 
+                : 'http://localhost:8080/api/news';
+                const response = await axios.get(url, {
                     headers: {
                         Authorization: `JWT ${token}`
                     }
@@ -35,7 +37,7 @@ const News = () => {
         
         }
         fetchNewsData();
-    }, []);
+    }, [ticker]);
 
     // Pagination logic
     const indexOfLastItem = currentPage * itemsPerPage;
