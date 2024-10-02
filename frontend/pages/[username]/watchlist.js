@@ -36,6 +36,7 @@ const Watchlist = () => {
         }
     }, [username, setFavourites]);
 
+
     const handleRemoveFavourite = async (ticker) => {
         try {
             const token = getToken();
