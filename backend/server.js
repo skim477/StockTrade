@@ -108,7 +108,6 @@ app.post("/api/login", async (req,res) => {
         });
 
         res.status(200).json({ message: "Login successful", token });
-        console.log('JWT Secret:', process.env.JWT_SECRET);
     } catch (error) {
         res.status(500).json({ message: "Server error", error: error.message });
     }
@@ -128,30 +127,17 @@ app.get("/api/top-gainers-losers", passport.authenticate('jwt', { session: false
 });
 
 app.get("/api/news", passport.authenticate('jwt', { session: false}), async (req,res) => {
+    const { symbol } = req.query;
     const POLYGON_API_KEY = process.env.POLYGON_API_KEY;
-    const POLYGON_URL = `https://api.polygon.io/v2/reference/news?limit=12&apiKey=${POLYGON_API_KEY}`;
-    try {
-        const response = await axios.get(POLYGON_URL);
-        res.status(200).json(response.data);
-    } catch (error) {
-        res.status(500).json({ message: "Failed to fetch data", error: error.message });
-    }
-});
+    const POLYGON_URL = symbol
 
-app.get("/api/news/:symbol", passport.authenticate('jwt', { session: false}), async (req,res) => {
-    const { symbol } = req.params;
-    
-    const POLYGON_API_KEY = process.env.POLYGON_API_KEY;
-    const POLYGON_URL = `https://api.polygon.io/v2/reference/news?ticker=${symbol}&limit=10&apiKey=${POLYGON_API_KEY}`;
-   
+        ? `https://api.polygon.io/v2/reference/news?ticker=${symbol}&limit=12&apiKey=${POLYGON_API_KEY}`
+        : `https://api.polygon.io/v2/reference/news?limit=12&apiKey=${POLYGON_API_KEY}`;
     try {
         const response = await axios.get(POLYGON_URL);
-        if (!response.data || !response.data.results) {
-            return res.status(404).json({ message: "No data found for the given symbol." });
-        }
         res.status(200).json(response.data);
     } catch (error) {
-         console.error('Error fetching data from Polygon.io:', error.message);
+        console.error('Error fetching data from Polygon.io:', error.message);
         res.status(500).json({ message: "Failed to fetch data", error: error.message });
     }
 });
@@ -191,6 +177,85 @@ app.get("/api/dividends/:symbol", passport.authenticate('jwt', { session: false}
     } catch (error) {
          console.error('Error fetching data from Polygon.io:', error.message);
         res.status(500).json({ message: "Failed to fetch data", error: error.message });
+    }
+});
+
+app.get("/api/favourites", passport.authenticate('jwt', { session: false }), async (req, res) => {
+    const userId = req.user._id;
+    
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
+        res.status(200).json({ favourites: user.favourites });
+    } catch (error) {
+        console.error('Error fetching favourites:', error.message);
+        res.status(500).json({ message: "Failed to fetch favourites.", error: error.message });
+    }
+});
+
+
+app.post("/api/favourites", passport.authenticate('jwt', { session: false}), async (req,res) => {
+    const { symbol } = req.body;
+    const userId = req.user._id;
+
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        if (!user.favourites.includes(symbol)) {
+            user.favourites.push(symbol);
+            await user.save();
+        }
+
+        res.status(200).json({ message: `${symbol} added to favourite` });
+
+    } catch (error) {
+        console.error('Error adding to favourites: ', error.message);
+        res.status(500).json({ message: 'Failed to add to favourites. ', error: error.message });
+    
+    }
+});
+
+app.delete("/api/favourites/:symbol", passport.authenticate('jwt', { session: false}), async (req,res) => {
+    const { symbol } = req.params;
+    const userId = req.user._id;
+
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        user.favourites = user.favourites.filter(fav => fav !== symbol);
+        await user.save();
+
+        res.status(200).json({ message: `${symbol} removed from favourites.` });
+
+    } catch {
+        console.error('Error removing to favourites: ', error.message);
+        res.status(500).json({ message: 'Failed to remove to favourites. ', error: error.message });
+    }
+
+});
+
+app.get("/api/favourites/:symbol", passport.authenticate('jwt', { session: false }), async (req, res) => {
+    const { symbol } = req.params;
+    const userId = req.user._id;
+
+    try {
+        const user = await User.findById(userId);
+        const isFavourite = user.favourites.includes(symbol);
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
+        res.status(200).json({ isFavourite });
+    } catch (error) {
+        console.error('Error fetching favourites:', error.message);
+        res.status(500).json({ message: "Failed to fetch favourites.", error: error.message });
     }
 });
 
