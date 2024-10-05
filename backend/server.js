@@ -108,7 +108,6 @@ app.post("/api/login", async (req,res) => {
         });
 
         res.status(200).json({ message: "Login successful", token });
-        console.log('JWT Secret:', process.env.JWT_SECRET);
     } catch (error) {
         res.status(500).json({ message: "Server error", error: error.message });
     }
@@ -142,7 +141,6 @@ app.get("/api/news", passport.authenticate('jwt', { session: false}), async (req
         res.status(500).json({ message: "Failed to fetch data", error: error.message });
     }
 });
-
 
 
 app.get("/api/stock/:symbol", passport.authenticate('jwt', { session: false}), async (req,res) => {
