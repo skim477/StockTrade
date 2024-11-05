@@ -1,15 +1,15 @@
  <h4 align="center"><b>Stocktrade Viewing Application</b></h4>
 
- Backend: Node.js, Express.js, MongoDB
- Frontend: Next.js, React, JavaScript, Bootstrap
- API: Polygon.io, Alpha Vantage, TradingView
+ Backend: Node.js, Express.js, MongoDB <br>
+ Frontend: Next.js, React, JavaScript, Bootstrap <br>
+ API: Polygon.io, Alpha Vantage, TradingView <br><br>
  
- To run this code: create a .env file on the backend and api keys and jwt_secret key are needed.
- /backend/.env:
- MONGO_URI=
- JWT_SECRET=
- ALPHA_API_KEY=
- POLYGON_API_KEY=
+ To run this code: create a .env file on the backend and api keys and jwt_secret key are needed. <br>
+ /backend/.env: <br>
+ MONGO_URI= <br>
+ JWT_SECRET= <br>
+ ALPHA_API_KEY= <br>
+ POLYGON_API_KEY= <br>
 
 Login page:
 ![login](img/login.png)
