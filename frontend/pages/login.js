@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { setToken } from '@/lib/authenticate';
 import { useRouter } from 'next/router';
-import { Container, Button, Card, Form } from 'react-bootstrap';
+import { Container, Button, Card, Form, Alert } from 'react-bootstrap';
 
 const Login = () => {
 
@@ -9,6 +9,7 @@ const Login = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [warning, setWarning] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -34,6 +35,7 @@ const Login = () => {
             }
         } catch (error) {
             console.error('Error:', error);
+            setWarning('An error occurred');
         }
     };
 
@@ -49,6 +51,7 @@ const Login = () => {
                     <Card.Title style={{ color: 'white' }}>Account</Card.Title>
                 </Card.Header>
                 <Card.Body>
+                    {warning && <Alert variant="danger">{warning}</Alert>}
                     <Form onSubmit={handleSubmit}>
                         <Form.Group className="mb-3">
                             <Form.Label>Email</Form.Label>
