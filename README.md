@@ -6,7 +6,7 @@ API: Polygon.io, Alpha Vantage, TradingView
 
 To run this code: create a .env file on the backend and api keys and jwt_secret key are required.
 /backend/.env:
-MONGO_URI= 
+MONGO_URI=
 JWT_SECRET=
 ALPHA_API_KEY=
 POLYGON_API_KEY=
