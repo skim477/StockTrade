@@ -1,7 +1,7 @@
 
 
-Backend: Node.js, Express.js, MongoDB
-Frontend: Next.js, React, JavaScript, Bootstrap
+Backend: Node.js, Express.js, MongoDB <br>
+Frontend: Next.js, React, JavaScript, Bootstrap<br>
 API: Polygon.io, Alpha Vantage, TradingView
 
 To run this code: create a .env file on the backend and api keys and jwt_secret key are required.<br>
