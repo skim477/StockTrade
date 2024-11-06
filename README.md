@@ -29,4 +29,4 @@ search page:
 
 watchlist page:
 /hi/watchlist
-![watchlist](img/watchlist.png)
+![watchlist](img/watchlist1.png)
