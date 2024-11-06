@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Container, Row, Col, Card, Button, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Alert, Spinner } from 'react-bootstrap';
 import axios from 'axios';
 import { getToken } from '@/lib/authenticate';
 import { useAtom } from 'jotai';
 import { favouritesAtom } from '@/lib/store'; // Import the Jotai atom
+import dynamic from 'next/dynamic';
+
+// Dynamically import SingleTicker, disabling SSR
+const SingleTicker = dynamic(() => import('react-ts-tradingview-widgets').then((mod) => mod.SingleTicker), { ssr: false });
 
 const Watchlist = () => {
     const router = useRouter();
@@ -59,7 +63,7 @@ const Watchlist = () => {
         }
     };
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Spinner animation="border" role="status"/>;
     if (error) return <Alert variant="danger">{error}</Alert>;
 
     return (
@@ -76,6 +80,12 @@ const Watchlist = () => {
                                     <Card.Title onClick={() => navigateToTicker(ticker)} style={{ cursor: 'pointer' }}>
                                         {ticker.toUpperCase()}
                                     </Card.Title>
+                                    <Card.Text>
+                                        <SingleTicker width="100%" symbol={ticker} />
+                                    </Card.Text>
+                                    <Button variant="primary" size="sm" className="me-1" onClick={() => navigateToTicker(ticker)}>
+                                        More
+                                    </Button>
                                     <Button variant="danger" size="sm" onClick={() => handleRemoveFavourite(ticker)}>
                                         Remove
                                     </Button>
