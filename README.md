@@ -1,4 +1,4 @@
- <h4 align="center"><b>Stocktrade Viewing Application</b></h4>
+
 
 Backend: Node.js, Express.js, MongoDB
 Frontend: Next.js, React, JavaScript, Bootstrap
@@ -30,3 +30,4 @@ search page:
 watchlist page:
 /hi/watchlist
 ![watchlist](img/watchlist1.png)
+
