@@ -1,6 +1,8 @@
+
 <h4 align="center"><b>Stocktrade Viewing Application</b></h4><br>
  
 Purpose: To Develop a web application to track and display stock market data that implemented user authentication for secure access to personalized stock information.
+
 
 Backend: Node.js, Express.js, MongoDB <br>
 Frontend: Next.js, React, JavaScript, Bootstrap<br>
@@ -32,3 +34,4 @@ search page:
 watchlist page:
 /hi/watchlist
 ![watchlist](img/watchlist1.png)
+
