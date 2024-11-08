@@ -7,6 +7,7 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import TradingviewChart from '../components/tradingviewChart';
 import { getToken, readToken } from '@/lib/authenticate';
 import { useRouter } from 'next/router';
+import Category from '../components/category';
 
 const Main = () => {
 
@@ -72,7 +73,11 @@ const Main = () => {
               {showGainersLosers && (<TopGainersLosers />)}
             </Col>
           </Row>
-
+          <Row className='mb-3'>
+            <Col xs={12}>
+              <Category />
+            </Col>
+          </Row>
           <Row>
             <Col xs={12}>
               <News />
