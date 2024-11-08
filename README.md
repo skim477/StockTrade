@@ -1,4 +1,6 @@
- <h4 align="center"><b>Stocktrade Viewing Application</b></h4>
+<h4 align="center"><b>Stocktrade Viewing Application</b></h4><br>
+ 
+Purpose: To Develop a web application to track and display stock market data that implemented user authentication for secure access to personalized stock information.
 
 Backend: Node.js, Express.js, MongoDB <br>
 Frontend: Next.js, React, JavaScript, Bootstrap<br>
@@ -19,7 +21,7 @@ Signup page:
 
 Main page:
 /hi/main
-![main](img/main.png)
+![main](img/main1.png)
 
 search page:
 /hi/aapl
