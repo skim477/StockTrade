@@ -21,8 +21,8 @@ const News = ({ticker}) => {
 
                 const token = getToken(); // Get JWT token
                 const url = ticker 
-                ? `http://localhost:8080/api/news?=${ticker}` 
-                : 'http://localhost:8080/api/news';
+                ? `${process.env.NEXT_PUBLIC_API_URL}/api/news?=${ticker}` 
+                : `${process.env.NEXT_PUBLIC_API_URL}/api/news`;
                 const response = await axios.get(url, {
                     headers: {
                         Authorization: `JWT ${token}`

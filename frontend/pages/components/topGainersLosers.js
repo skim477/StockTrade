@@ -26,7 +26,7 @@ const TopGainersLosers = () => {
                 // const response = await axios.get(ALPHA_URL);
 
                 const token = getToken(); // Get JWT token
-                const response = await axios.get('http://localhost:8080/api/top-gainers-losers', {
+                const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/top-gainers-losers`, {
                     headers: {
                         Authorization: `JWT ${token}`
                     }

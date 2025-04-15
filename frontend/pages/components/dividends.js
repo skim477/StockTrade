@@ -17,7 +17,7 @@ const Dividends = ({ticker}) => {
             setLoading(true);
             try {
                 const token = getToken();
-                const response = await axios.get(`http://localhost:8080/api/dividends/${ticker}`, {
+                const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/dividends/${ticker}`, {
                     headers: {
                       Authorization: `JWT ${token}`
                     }

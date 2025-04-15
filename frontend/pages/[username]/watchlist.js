@@ -21,7 +21,7 @@ const Watchlist = () => {
         const fetchFavourites = async () => {
             try {
                 const token = getToken();
-                const response = await axios.get('http://localhost:8080/api/favourites', {
+                const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/favourites`, {
                     headers: {
                         Authorization: `JWT ${token}`,
                     },
@@ -44,7 +44,7 @@ const Watchlist = () => {
     const handleRemoveFavourite = async (ticker) => {
         try {
             const token = getToken();
-            await axios.delete(`http://localhost:8080/api/favourites/${ticker}`, {
+            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/favourites/${ticker}`, {
                 headers: {
                     Authorization: `JWT ${token}`,
                 },
