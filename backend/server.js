@@ -46,12 +46,12 @@ app.use(passport.initialize());
 
 
 // middleware
-//app.use(cors());
+app.use(cors());
 
-app.use(cors({
-    origin: ['https://stock-trade-57je.vercel.app', 'http://localhost:3000'],
-    credentials: true,
-  }));
+// app.use(cors({
+//     origin: ['https://stock-trade-57je.vercel.app', 'http://localhost:3000'],
+//     credentials: true,
+//   }));
 app.use(express.json());
 
 mongoose.connect(process.env.MONGO_URI, {
@@ -90,6 +90,7 @@ app.post("/api/signup", async (req,res) => {
 });
 
 app.post("/api/login", async (req,res) => {
+    console.log("🔐 Login API called:", req.body);
     const { email, password } = req.body;
 
     try {
