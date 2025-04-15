@@ -44,8 +44,14 @@ passport.use(strategy);
 // add passport as application-level middleware
 app.use(passport.initialize());
 
+
 // middleware
-app.use(cors());
+//app.use(cors());
+
+app.use(cors({
+    origin: ['https://stock-trade-57je.vercel.app/', 'http://localhost:3000'],
+    credentials: true,
+  }));
 app.use(express.json());
 
 mongoose.connect(process.env.MONGO_URI, {
