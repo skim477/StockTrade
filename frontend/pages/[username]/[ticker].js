@@ -22,7 +22,7 @@ const Ticker = () => {
             const checkFavouriteStatus = async () => {
                 try {
                     const token = getToken();
-                    const response = await axios.get(`http://localhost:8080/api/favourites/${symbol}`, {
+                    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/favourites/${symbol}`, {
                         headers: {
                             Authorization: `JWT ${token}`,
                         },
@@ -43,14 +43,14 @@ const Ticker = () => {
         try {
             const token = getToken();
             if (favourites.includes(symbol)) {
-                await axios.delete(`http://localhost:8080/api/favourites/${symbol}`, {
+                await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/favourites/${symbol}`, {
                     headers: {
                         Authorization: `JWT ${token}`,
                     },
                 });
                 setFavourites((prev) => prev.filter((fav) => fav !== symbol)); // Remove from Jotai atom state
             } else {
-                await axios.post(`http://localhost:8080/api/favourites`, { symbol }, {
+                await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/favourites`, { symbol }, {
                     headers: {
                         Authorization: `JWT ${token}`,
                     },
