@@ -49,7 +49,7 @@ app.use(passport.initialize());
 //app.use(cors());
 
 app.use(cors({
-    origin: ['https://stock-trade-57je.vercel.app/', 'http://localhost:3000'],
+    origin: ['https://stock-trade-57je.vercel.app', 'http://localhost:3000'],
     credentials: true,
   }));
 app.use(express.json());
