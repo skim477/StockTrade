@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Table, Pagination } from 'react-bootstrap';
+import styles from '@/styles/News.module.css';
 import axios from 'axios';
 import { getToken } from '@/lib/authenticate';
 
@@ -51,9 +52,9 @@ const Dividends = ({ticker}) => {
     if (error) return <p>Error: {error}</p>
 
     return (
-        <Container>
+        <Container className={styles.newsContainer}>
             <Row>
-                <h3>Dividends History: {ticker}</h3>
+                <h3 className="mb-2">{ticker} Dividends History</h3>
                 <Table striped bordered hover>
                     <thead>
                         <tr>

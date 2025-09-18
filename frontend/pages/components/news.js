@@ -21,7 +21,7 @@ const News = ({ticker}) => {
 
                 const token = getToken(); // Get JWT token
                 const url = ticker 
-                ? `${process.env.NEXT_PUBLIC_API_URL}/api/news?=${ticker}` 
+                ? `${process.env.NEXT_PUBLIC_API_URL}/api/news?symbol=${ticker}` 
                 : `${process.env.NEXT_PUBLIC_API_URL}/api/news`;
                 const response = await axios.get(url, {
                     headers: {
@@ -58,16 +58,29 @@ const News = ({ticker}) => {
     return (
         <Container className={styles.newsContainer}>
             <Row>
-                <h3>Top News</h3>
+                <h3>{ticker ? `${ticker} Related News` : "Top News"}</h3>
                 {currentNews.map((news, index)=>(
                     <Col key={index} className="mb-4">
-                    <Card style={{ width: '18rem' }}>
-                        <Card.Img className={styles.newsCardImg} variant="top" src={news.image_url} alt={news.title}/>
-                        <Card.Body>
-                            <Card.Title style={{fontSize:'1.0rem'}}>{news.title}</Card.Title>
-                            <Card.Text style={{fontSize:'0.8rem'}}>{news.description}</Card.Text>
-                            <a href={news.article_url} target="_blank" rel="noopener noreferrer" className="btn btn-primary">Read More</a>
-
+                    <Card className={styles.newsCard}>
+                        <div className={styles.newsCardImgWrapper}>
+                            <Card.Img 
+                                className={styles.newsCardImg} 
+                                variant="top" 
+                                src={news.image_url} 
+                                alt={news.title}
+                            />
+                        </div>
+                        <Card.Body className={styles.newsCardBody}>
+                            <Card.Title className={styles.newsCardTitle}>{news.title}</Card.Title>
+                            <Card.Text className={styles.newsCardText}>{news.description}</Card.Text>
+                            <a 
+                                href={news.article_url} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className={`btn btn-primary ${styles.newsCardButton}`}
+                            >
+                                Read More
+                            </a>
                         </Card.Body>
                     </Card>
                     </Col>

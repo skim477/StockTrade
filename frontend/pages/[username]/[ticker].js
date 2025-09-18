@@ -69,7 +69,7 @@ const Ticker = () => {
 
     return (
         <Container fluid="md">
-            <Row className='mb-3'>
+            <Row className='mt-3 mb-3'>
                 <h3>{symbol}</h3>
                 <Button variant={favourites.includes(symbol) ? 'danger' : 'success'} onClick={handleFavouriteToggle}>
                     {favourites.includes(symbol) ? 'Remove from watchlist' : 'Add to watchlist'}
@@ -80,10 +80,10 @@ const Ticker = () => {
                     {error}
                 </Alert>
             )}
-            <Row className='mb-3'>
+            <Row className='mb-4'>
                 <TradingViewChart symbol={symbol} />
             </Row>
-            <Row className='mb-3'>
+            <Row className='mb-4'>
                 <Dividends ticker={symbol} />
             </Row>
             <Row>

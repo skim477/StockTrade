@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import TopGainersLosers from "../components/topGainersLosers";
 import News from "../components/news";
 import { Container, Row, Col, Button } from 'react-bootstrap';
-//import StockChart from "../components/chart";
-//import UseStockData from '../components/useStockData';
-import TradingviewChart from '../components/tradingviewChart';
+import TradingviewMiniChart from '../components/tradingviewMiniChart';
+import TradingviewTapeChart from '../components/tradingviewTapeChart';
 import { getToken, readToken } from '@/lib/authenticate';
 import { useRouter } from 'next/router';
 import Category from '../components/category';
 
 const Main = () => {
 
-  const [showGainersLosers, setShowGainersLosers] = useState(false);
+  const [showGainersLosers, setShowGainersLosers] = useState(true);
   //const { stockData, loading, error } = UseStockData('AAPL');
   const [loading, setLoading] = useState(true);
   const router = useRouter();
@@ -62,15 +60,14 @@ const Main = () => {
             <h2>Welcome, {username}</h2>
           </Row>
           <Row className='mb-3'>
-            {/* <Col xs={12} lg={8}><StockChart data={stockData} ticker='AAPL' /></Col> */}
-            <Col xs={12} lg={8}>
-              <TradingviewChart symbol='NASDAQ'/>
+            <Col xs={12} lg={12}>
+              <TradingviewTapeChart />
             </Col>
-            <Col xs={12} lg={4}>
-              <Button onClick={handleButtonClick} className="mb-3 mt-3 w-100">
-                {showGainersLosers ? "Hide Top Gainers/Top Losers/Most Active" :  "Show Top Gainers / Top Losers / Most Active"}
-              </Button>
-              {showGainersLosers && (<TopGainersLosers />)}
+            <Col xs={12} lg={6}>
+              <TradingviewMiniChart symbol='NASDAQ:IXIC'/>
+            </Col>
+            <Col xs={12} lg={6}>
+              <TradingviewMiniChart symbol='TSX'/>
             </Col>
           </Row>
           <Row className='mb-3'>

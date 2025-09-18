@@ -121,17 +121,18 @@ app.post("/api/login", async (req,res) => {
 });
 
 // Add a protected route for top gainers/losers
-app.get("/api/top-gainers-losers", passport.authenticate('jwt', { session: false }), async (req, res) => {
-    console.log('Top Gainers Losers API called'); 
-    const ALPHA_API_KEY = process.env.ALPHA_API_KEY;
-    const ALPHA_URL = `https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=${ALPHA_API_KEY}`;
-    try {
-        const response = await axios.get(ALPHA_URL);
-        res.status(200).json(response.data);
-    } catch (error) {
-        res.status(500).json({ message: "Failed to fetch data", error: error.message });
-    }
-});
+// app.get("/api/top-gainers-losers", passport.authenticate('jwt', { session: false }), async (req, res) => {
+//     console.log('Top Gainers/Losers/Actives API called'); 
+//     const ALPHA_API_KEY = process.env.ALPHA_API_KEY;
+//     const ALPHA_URL = `https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=${ALPHA_API_KEY}`;
+//     try {
+//         const response = await axios.get(ALPHA_URL);
+//         res.status(200).json(response.data);
+//     } catch (error) {
+//         res.status(500).json({ message: "Failed to fetch data", error: error.message });
+//     }
+// });
+
 
 app.get("/api/news", passport.authenticate('jwt', { session: false}), async (req,res) => {
     const { symbol } = req.query;
@@ -145,7 +146,7 @@ app.get("/api/news", passport.authenticate('jwt', { session: false}), async (req
         res.status(200).json(response.data);
     } catch (error) {
         console.error('Error fetching data from Polygon.io:', error.message);
-        res.status(500).json({ message: "Failed to fetch data", error: error.message });
+        res.status(500).json({ message: "Failed to fetch data, temporarily unavailable due to free API", error: error.message });
     }
 });
 
@@ -165,7 +166,7 @@ app.get("/api/stock/:symbol", passport.authenticate('jwt', { session: false}), a
         res.status(200).json(response.data);
     } catch (error) {
          console.error('Error fetching data from Polygon.io:', error.message);
-        res.status(500).json({ message: "Failed to fetch data", error: error.message });
+        res.status(500).json({ message: "Failed to fetch data, temporarily unavailable due to free API limits", error: error.message });
     }
 });
 
@@ -183,7 +184,7 @@ app.get("/api/dividends/:symbol", passport.authenticate('jwt', { session: false}
         res.status(200).json(response.data);
     } catch (error) {
          console.error('Error fetching data from Polygon.io:', error.message);
-        res.status(500).json({ message: "Failed to fetch data", error: error.message });
+        res.status(500).json({ message: "Failed to fetch data, temporarily unavailable due to free API limits", error: error.message });
     }
 });
 

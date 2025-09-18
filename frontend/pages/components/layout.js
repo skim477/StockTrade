@@ -1,4 +1,5 @@
 import React from 'react';
+import { Container } from "react-bootstrap";
 import NavbarComponent from './navbar';
 import { useRouter } from 'next/router';
 
@@ -7,9 +8,16 @@ const Layout = ({ children }) => {
     const hideNavbarRoutes = ['/login', '/signup'];
 
     return (
-        <div>
+        <div className="d-flex flex-column min-vh-100">
             {!hideNavbarRoutes.includes(router.pathname) && <NavbarComponent />}
-            {children}
+            <main className="flex-grow-1">{children}</main>
+                <footer className="bg-light text-center text-muted mt-5 py-3">
+            <Container>
+                <small>
+                © 2025 StockTrade View App — Powered by Polygon.io & TradingView by Seongjun Kim
+                </small>
+            </Container>
+            </footer>
         </div>
     )
 
