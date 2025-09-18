@@ -5,7 +5,53 @@
     background-color: #f8f9fa;
   }
 
+/* Control card height */
+.newsCard {
+  width: 18rem;
+  height: 370px;  
+  display: flex;
+  flex-direction: column;
+}
+
+.newsCardImgWrapper {
+  height: 140px;              /* fixed image box */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; 
+  padding: 0 1rem;          /* hide overflow if image is bigger */
+  background: #fff;           /* optional, makes consistent bg */
+}
+
 .newsCardImg {
-  height: 180px;
-  object-fit: cover;
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;        /* keep aspect ratio */
+}
+
+.newsCardBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.newsCardTitle {
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.newsCardText {
+  font-size: 0.8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* Clamp to 3 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  margin-bottom: auto; 
+}
+
+.newsCardButton {
+  margin-top: auto;            /* pushes button to bottom */
 }

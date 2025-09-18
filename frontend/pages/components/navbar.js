@@ -48,7 +48,6 @@ const NavbarComponent = () => {
             <Nav className="me-auto">
               <Nav.Link onClick={() => handleNavigation('main')}>Home</Nav.Link>
               <Nav.Link onClick={() => handleNavigation('watchlist')}>Watchlist</Nav.Link>
-              <Nav.Link onClick={() => handleNavigation('autotrade')}>Auto-trade</Nav.Link>
               <NavDropdown title={username} id="basic-nav-dropdown" >
                 <NavDropdown.Item >
                   <Logout />
@@ -60,9 +59,10 @@ const NavbarComponent = () => {
                 <Form.Control 
                   className="form-control me-sm-2" 
                   type="search" 
-                  placeholder="Search by Symbol" 
+                  placeholder="Search by Symbol (e.g., AAPL)" 
                   value={searchQuery}
                   onChange={handleSearchChange}
+                  style={{ width: "280px" }}
                 />
                 <Button className="btn btn-secondary my-2 my-sm-0" type="submit">Search</Button>
               </Form>

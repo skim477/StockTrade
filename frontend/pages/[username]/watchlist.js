@@ -68,7 +68,7 @@ const Watchlist = () => {
 
     return (
         <Container fluid="md">
-            <Row className="mb-3">
+            <Row className="mt-3 mb-3">
                 <h2>{username}'s Watchlist</h2>
             </Row>
             <Row>

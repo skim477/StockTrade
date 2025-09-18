@@ -1,37 +1,43 @@
-
-<h4 align="center"><b>Stocktrade Viewing Application</b></h4><br>
+# StockTrade View Application
  
-Purpose: To Develop a web application to track and display stock market data that implemented user authentication for secure access to personalized stock information.
+**StockTrade** is a stock trade viewing web application designed to track and display stock market data that implemented user authentication for secure access to personalized stock information.
 
+---
 
-Backend: Node.js, Express.js, MongoDB <br>
-Frontend: Next.js, React, JavaScript, Bootstrap<br>
-API: Polygon.io, Alpha Vantage, TradingView
+## Developer
+Name: Seongjun Kim
 
-To run this code: create a .env file on the backend and api keys and jwt_secret key are required.<br>
-/backend/.env:<br>
-MONGO_URI=<br>
-JWT_SECRET=<br>
-ALPHA_API_KEY=<br>
-POLYGON_API_KEY=
+## Project Description
+**StockTrade** is a full-stack web application that integrates Polygon.io and TradingView to provide real-time stock data, news, dividends, and market insights. With a responsive interface built using React and Next.js, users can seamlessly search stocks, review detailed information, and manage their personalized watchlist.
 
-Login page:
-![login](img/login.png)
+## Features
+- Market Overview — View indices and market summaries
+- Detailed Stock Information — Explore price data and trading charts
+- Search Stocks — Quickly look up stock information by ticker symbol
+- Top News — View the latest financial news and updates
+- Dividend History — Access dividend payment records
+- Stock-Related News — Browse news specific to the selected stock
+- Categories — Explore stocks by sector and region
+- Watchlist — Add or remove stocks from your personalized list
 
-Signup page:
-![signup](img/signup.png)
+## Tech Stack
 
-Main page:
-/hi/main
-![main](img/main1.png)
+### Backend 
+- Node.js
+- Express.js
+- MongoDB
+- jwt
+- bcryptjs
 
-search page:
-/hi/aapl
-![search](img/search.png)
-![search](img/search2.png)
+### Frontend
+- Next.js 
+- React.js
+- Bootstrap
+- bootswatch
+- axios
+- jotai
 
-
-watchlist page:
-/hi/watchlist
-![watchlist](img/watchlist1.png)
+### API
+- Polygon.io — Stock market and financial data
+- TradingView — Charts and widgets
 
