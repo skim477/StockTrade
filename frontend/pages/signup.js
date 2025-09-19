@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Container, Button, Card, Form, Alert } from 'react-bootstrap';
+import logo from '../public/stock-market.png';
 
 const SignUp = () => {
     const [email, setEmail] = useState('');
@@ -39,7 +40,15 @@ const SignUp = () => {
 
     return (
         <Container fluid="md" className="mt-5">
-            <h2 style={{ color: '#78C2AD' }} className="text-center  mb-3">StockTrade</h2>
+            <div className="d-flex flex-column align-items-center mb-4">
+                <img
+                src={logo.src}
+                style={{ maxWidth: "50px" }}
+                alt="Logo"
+                />
+                <h2 style={{ color: '#78C2AD', marginTop: "0.5rem" }}>StockTrade</h2>
+                <p style={{ color: 'gray', fontSize: "1.2em" }}>Your Gateway to the stock market - track and explore your favourite stocks. Enjoy!</p>
+            </div>
             <Card style={{backgroundColor: '#78C2AD', color: 'white', width: '60%', margin: 'auto', padding: '3rem'}}>
                 <Card.Header>
                     <Card.Title style={{ color: 'white' }}>Create an Account</Card.Title>
